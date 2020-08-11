@@ -1,6 +1,34 @@
 ## About
 
-A Apollo Server boilerplate with TypeScript support. Including development setup to ensure clean and working code before pushing.
+This is a simple example of a http graphql server with Typescript and apollo. 
+
+| Category  | Pro | Cons |
+| ------------- | ------------- | ------------- |
+| Language<br />(TypeScript)  | - [Widely Excepted](https://trends.google.com/trends/explore?geo=US&q=%2Fm%2F02p97,%2Fm%2F07sbkfb,%2Fm%2F05z1_,%2Fm%2F03yb8hb) <br />- [Type Safe](https://en.wikipedia.org/wiki/Type_safety) <br />- [npm](https://www.npmjs.com/) (350,000+ packages)   |  - Async coding nuances for new JS learns  |
+| Pure  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS <br /> - No addition configuration for devs <br /> - Good software principles of demarkation points for apps <br /> - Quick, repeatable dev patters | - Restricted to Node  |
+
+List of other cool features thrown in:
+- [Auto code formatting](https://prettier.io/docs/en/)
+- [Git Coventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#summary)
+    - automatic changelog and versioning with easy filtering/finding
+- [Tests, Setup and Hooks Autorun](https://www.npmjs.com/package/husky)
+    - TODO finish setting up auto install and possibly swap NVM to prerequisites
+- [CI tools that will report to git automatically](https://circleci.com/)
+- [GraphQLI out of the box for free](https://www.apollographql.com/docs/apollo-server/#:~:text=Apollo%20Server%20provides%3A,you%20to%20ship%20features%20faster)
+- Use an IDE of your choice, recommended [Visual Studio Code](https://code.visualstudio.com/) or [IntelliJ](https://www.jetbrains.com/idea/) for prettier and file watcher autoformat plugins among others
+    
+## Prerequisites
+- [Node v10+/NPM v6+](https://nodejs.org/en/)
+
+## Learning Curve
+<h5>Things you need to know</h5>
+- :white_check_mark: JavaScript
+- :white_check_mark: GraphQL
+
+<h5>Things you dont need to know</h5>
+- :x: *nix
+- :x: A new IDE (integrated development environment)
+- :x: 
 
 ## Included
 
