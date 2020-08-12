@@ -4,8 +4,8 @@ This is a simple example of a http graphql server with Typescript and apollo.
 
 | Category  | Pro | Cons |
 | ------------- | ------------- | ------------- |
-| Language<br />(TypeScript)  | - [Widely Excepted](https://trends.google.com/trends/explore?geo=US&q=%2Fm%2F02p97,%2Fm%2F07sbkfb,%2Fm%2F05z1_,%2Fm%2F03yb8hb) in dev community <br />- [Type Safe](https://en.wikipedia.org/wiki/Type_safety) <br />- [npm](https://www.npmjs.com/) (350,000+ packages) <br /> - Instant hot reload on save   |  - Async coding nuances for new JS learns  |
-| Pure<br />(1 Prerequisite)  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS <br /> - No addition configuration for new devs <br /> - Good software principles of demarkation points for apps <br /> - Quick, repeatable dev patters <br /> - Enforce clean code with auto linters | - Restricted to Node  |
+| Language<br />(TypeScript)  | - [Widely Excepted](https://trends.google.com/trends/explore?geo=US&q=%2Fm%2F02p97,%2Fm%2F07sbkfb,%2Fm%2F05z1_,%2Fm%2F03yb8hb) in dev community <br />- [Type Safe](https://en.wikipedia.org/wiki/Type_safety) <br />- [npm](https://www.npmjs.com/) (350,000+ packages) <br /> - Instant hot reload on save   |  - Async coding nuances for new JS learners  |
+| Pure<br />(1 Prerequisite)  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS (OSX, *nix, Windows, etc.) <br /> - No addition configuration for new devs <br /> - Good software principles of demarkation points for apps <br /> - Quick, repeatable dev patters <br /> - Enforce clean code with auto linters | - Restricted to Node  |
 
 List of other cool features thrown in:
 - [Auto code formatting](https://prettier.io/docs/en/)
@@ -26,7 +26,7 @@ List of other cool features thrown in:
 
 ### Things you dont need to know
 - :x:  *nix <br />
-- :x: A specific IDE (integrated development environment) or work environment  <br />
+- :x: A specific integrated development environment or work environment (any works)  <br />
 
 ### Other requested changes
 - Remove verbs from graphQL external interface
