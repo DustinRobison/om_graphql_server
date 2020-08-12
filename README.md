@@ -5,7 +5,7 @@ This is a simple example of a http graphql server with Typescript and apollo.
 | Category  | Pro | Cons |
 | ------------- | ------------- | ------------- |
 | Language<br />(TypeScript)  | - [Widely Excepted](https://trends.google.com/trends/explore?geo=US&q=%2Fm%2F02p97,%2Fm%2F07sbkfb,%2Fm%2F05z1_,%2Fm%2F03yb8hb) in dev community <br />- [Type Safe](https://en.wikipedia.org/wiki/Type_safety) <br />- [npm](https://www.npmjs.com/) (350,000+ packages) <br /> - Instant hot reload on save   |  - Async coding nuances for new JS learners  |
-| Pure<br />(1 Prerequisite)  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS (OSX, *nix, Windows, etc.) <br /> - No addition configuration for new devs <br /> - Software principles of demarcation points for apps <br /> - Quick, repeatable dev patters <br /> - Enforce clean code with auto linters | - Restricted to Node  |
+| Pure<br />(1 Prerequisite)  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS (OSX, *nix, Windows, etc.) <br /> - No addition configuration or permissions for new devs <br /> - Software principles of demarcation points for apps <br /> - Quick, repeatable dev patters <br /> - Enforce clean code with auto linters | - Restricted to Node  |
 
 List of other cool features thrown in:
 - [Auto code formatting](https://prettier.io/docs/en/)
@@ -30,7 +30,9 @@ List of other cool features thrown in:
 
 ### Other requested changes
 - Remove verbs from graphQL external interface
-    - ie. `getOrder` should be `order` since it is already in a query and can be reused
+    - ie. `getOrder` could be `Order` since it is already in a query and can be reused
+- Ability to work offline with no internet connection
+    - has requirements like already having latest code and packages along with a local db
 
 ## Included
 

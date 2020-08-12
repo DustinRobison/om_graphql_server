@@ -1,0 +1,3 @@
+# DO NOT EDIT FILES IN THIS FOLDER MANUALLY!!
+
+### TO UPDATE graphql.ts USE THE CONFIGURED NPM SCRIPT `npm run generate:types`

@@ -1,24 +1,26 @@
 import { ApolloServer } from 'apollo-server';
+import { resolvers } from './resolvers/resolver';
+import { typeDefs } from './schema';
+import { createStore } from './utils';
 
-import { BooksProvider } from './providers/provider';
-import { OrdersProvider } from './providers/orders';
-import { resolvers, typeDefs } from './resolvers/resolver';
+import { OrderManagementDb } from './dataSources/order-management-db';
 
 // This is where we define the context type which is used
 // to have correct typing when using context in the resolvers.
 export interface Context {
   dataSources: {
-    booksProvider: BooksProvider;
-    ordersProvider: OrdersProvider;
+    orderManagementDb: OrderManagementDb;
   };
 }
+
+// Initialize store connection (or creation at the point)
+const store = createStore();
 
 // This is where we define the dataSources which can be
 // used to retrieve data from the resolvers.
 const dataSources = (): Context['dataSources'] => {
   return {
-    booksProvider: new BooksProvider(),
-    ordersProvider: new OrdersProvider()
+    orderManagementDb: new OrderManagementDb({ store })
   };
 };
 
@@ -27,7 +29,6 @@ const dataSources = (): Context['dataSources'] => {
 // responsible for fetching the data for those types.
 const server = new ApolloServer({
   typeDefs,
-  // @ts-ignore (FIXME: should be casted to default Resolvers type?)
   resolvers,
   dataSources
 });

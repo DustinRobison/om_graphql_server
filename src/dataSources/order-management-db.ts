@@ -1,5 +1,10 @@
 import { DataSource } from 'apollo-datasource';
-import { Order, QueryOrderArgs } from '../generated/graphql';
+import {
+  MutationSubmitOrderArgs,
+  Order,
+  QueryOrderArgs
+} from '../generated/graphql';
+import { StoreInterface } from '../utils';
 
 const orders: Order[] = [
   {
@@ -25,12 +30,26 @@ const orders: Order[] = [
   }
 ];
 
-export class OrdersProvider extends DataSource {
+export class OrderManagementDb extends DataSource {
+  private store: StoreInterface;
+  constructor({ store }) {
+    super();
+    this.store = store;
+  }
+
   public async getOrder(args: QueryOrderArgs) {
     return orders.find((order) => order.id === args.id);
   }
 
   public async getOrders() {
-    return orders;
+    return this.store.Order.findAll();
+    // return ordersRefs.every(order => order instanceof this.store.Order);
+  }
+
+  public async submitOrder(args: MutationSubmitOrderArgs) {
+    const order = await this.store.Order.create({
+      customerRelationshipId: args.order.customerRelationshipId
+    });
+    return order;
   }
 }

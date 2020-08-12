@@ -1,6 +1,6 @@
 /* tslint:disable */
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { Context } from '../index';
+import { Context } from '../app';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
@@ -17,10 +17,70 @@ export type Scalars = {
 
 
 
-export type Book = {
-  __typename?: 'Book';
-  title?: Maybe<Scalars['String']>;
-  author?: Maybe<Scalars['String']>;
+export type OrderInput = {
+  orderLines?: Maybe<Array<OrderLineItemInput>>;
+  serviceLocation?: Maybe<LocationInput>;
+  customerRelationshipId: Scalars['ID'];
+  paymentTransactionId?: Maybe<Scalars['ID']>;
+  executionDate?: Maybe<Scalars['DateTime']>;
+};
+
+export type OrderLineItemInput = {
+  orderLineId: Scalars['ID'];
+  serviceLocation?: Maybe<LocationInput>;
+  configuredProductType: ProductTypeInput;
+};
+
+export type LocationInput = {
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+  addressLines: Array<Scalars['String']>;
+  city: Scalars['String'];
+  regionOrState: Scalars['String'];
+  zipOrPostCode?: Maybe<Scalars['String']>;
+  isoCountryCode: IsoCountryCodeInput;
+};
+
+export type ProductTypeInput = {
+  productTypeId: Scalars['ID'];
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  kind: Scalars['String'];
+  characteristics?: Maybe<Array<Maybe<CharacteristicInput>>>;
+  prices?: Maybe<Array<Maybe<PriceInput>>>;
+  products?: Maybe<Array<Maybe<ProductTypeInput>>>;
+};
+
+export type MoneyInput = {
+  value?: Maybe<Scalars['Float']>;
+  currency?: Maybe<CurrencyInput>;
+};
+
+export type CurrencyInput = {
+  name?: Maybe<Scalars['String']>;
+  alphabeticCode?: Maybe<Scalars['String']>;
+  numericCode?: Maybe<Scalars['Int']>;
+};
+
+export type PriceInput = {
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  kind: Scalars['String'];
+  recurrence: Scalars['String'];
+  amount: MoneyInput;
+  percentage?: Maybe<Scalars['Float']>;
+  unitOfMeasure?: Maybe<Scalars['String']>;
+};
+
+export type IsoCountryCodeInput = {
+  name: Scalars['String'];
+  alphabeticThreeCharacterCode: Scalars['String'];
+};
+
+export type CharacteristicInput = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+  valueType?: Maybe<Scalars['String']>;
 };
 
 export type Order = {
@@ -104,19 +164,23 @@ export type Currency = {
 
 export type Query = {
   __typename?: 'Query';
-  book?: Maybe<Book>;
-  books?: Maybe<Array<Maybe<Book>>>;
   order?: Maybe<Order>;
-};
-
-
-export type QueryBookArgs = {
-  id: Scalars['Int'];
+  orders?: Maybe<Array<Maybe<Order>>>;
 };
 
 
 export type QueryOrderArgs = {
   id: Scalars['ID'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  submitOrder?: Maybe<Order>;
+};
+
+
+export type MutationSubmitOrderArgs = {
+  order: OrderInput;
 };
 
 
@@ -199,12 +263,21 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
-  Book: ResolverTypeWrapper<Book>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Order: ResolverTypeWrapper<Order>;
+  OrderInput: OrderInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  Location: ResolverTypeWrapper<Location>;
+  OrderLineItemInput: OrderLineItemInput;
+  LocationInput: LocationInput;
   Float: ResolverTypeWrapper<Scalars['Float']>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  ProductTypeInput: ProductTypeInput;
+  MoneyInput: MoneyInput;
+  CurrencyInput: CurrencyInput;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  PriceInput: PriceInput;
+  ISOCountryCodeInput: IsoCountryCodeInput;
+  CharacteristicInput: CharacteristicInput;
+  Order: ResolverTypeWrapper<Order>;
+  Location: ResolverTypeWrapper<Location>;
   OrderLineItem: ResolverTypeWrapper<OrderLineItem>;
   ISOCountryCode: ResolverTypeWrapper<IsoCountryCode>;
   ProductType: ResolverTypeWrapper<ProductType>;
@@ -212,8 +285,8 @@ export type ResolversTypes = {
   Price: ResolverTypeWrapper<Price>;
   Money: ResolverTypeWrapper<Money>;
   Currency: ResolverTypeWrapper<Currency>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -221,12 +294,21 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Date: Scalars['Date'];
   DateTime: Scalars['DateTime'];
-  Book: Book;
-  String: Scalars['String'];
-  Order: Order;
+  OrderInput: OrderInput;
   ID: Scalars['ID'];
-  Location: Location;
+  OrderLineItemInput: OrderLineItemInput;
+  LocationInput: LocationInput;
   Float: Scalars['Float'];
+  String: Scalars['String'];
+  ProductTypeInput: ProductTypeInput;
+  MoneyInput: MoneyInput;
+  CurrencyInput: CurrencyInput;
+  Int: Scalars['Int'];
+  PriceInput: PriceInput;
+  ISOCountryCodeInput: IsoCountryCodeInput;
+  CharacteristicInput: CharacteristicInput;
+  Order: Order;
+  Location: Location;
   OrderLineItem: OrderLineItem;
   ISOCountryCode: IsoCountryCode;
   ProductType: ProductType;
@@ -234,8 +316,8 @@ export type ResolversParentTypes = {
   Price: Price;
   Money: Money;
   Currency: Currency;
-  Int: Scalars['Int'];
   Query: {};
+  Mutation: {};
   Boolean: Scalars['Boolean'];
 };
 
@@ -246,12 +328,6 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
-
-export type BookResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
 
 export type OrderResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -333,15 +409,17 @@ export type CurrencyResolvers<ContextType = Context, ParentType extends Resolver
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  book?: Resolver<Maybe<ResolversTypes['Book']>, ParentType, ContextType, RequireFields<QueryBookArgs, 'id'>>;
-  books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
   order?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<QueryOrderArgs, 'id'>>;
+  orders?: Resolver<Maybe<Array<Maybe<ResolversTypes['Order']>>>, ParentType, ContextType>;
+};
+
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  submitOrder?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<MutationSubmitOrderArgs, 'order'>>;
 };
 
 export type Resolvers<ContextType = Context> = {
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
-  Book?: BookResolvers<ContextType>;
   Order?: OrderResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;
   OrderLineItem?: OrderLineItemResolvers<ContextType>;
@@ -352,6 +430,7 @@ export type Resolvers<ContextType = Context> = {
   Money?: MoneyResolvers<ContextType>;
   Currency?: CurrencyResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
 };
 
 

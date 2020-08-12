@@ -4,8 +4,8 @@
   "description": "",
   "keywords": [],
   "author": "",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
+  "main": "build/main/app.js",
+  "typings": "build/main/app.d.ts",
   "engines": {
     "node": ">=8.9"
   },
@@ -15,7 +15,7 @@
     "fix:tslint": "tslint --fix --project .",
     "generate:types": "graphql-codegen --config codegen.yml",
     "dev": "nodemon",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/app.ts",
     "test": "run-s test:*",
     "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
     "test:types": "tsc -p . --noEmit"
