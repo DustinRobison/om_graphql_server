@@ -92,7 +92,7 @@ export class ExampleAPI extends RestDataSource {
 
 #### Resolvers
 
-Finally you could create your typed resolvers in the `resolvers.ts` file like following:
+Finally, you could create your typed resolvers in the `resolvers.ts` file like following:
 
 ```ts
 import { IResolvers } from './generated/grapql';
@@ -103,3 +103,5 @@ export const resolvers: IResolvers = {
   }
 };
 ```
+
+

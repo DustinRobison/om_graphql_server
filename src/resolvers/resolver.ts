@@ -89,6 +89,7 @@ export const typeDefs = gql`
     book(id: Int!): Book
     books: [Book]
     order(id: ID!): Order
+    orders: [Order]
   }
 `;
 
@@ -98,6 +99,7 @@ export const resolvers = {
   Query: {
     book: (_, args, ctx) => ctx.dataSources.booksProvider.getBook(args),
     books: (_, __, ctx) => ctx.dataSources.booksProvider.getBooks(),
-    order: (_, args, ctx) => ctx.dataSources.ordersProvider.getOrder(args)
+    order: (_, args, ctx) => ctx.dataSources.ordersProvider.getOrder(args),
+    orders: (_, __, ctx) => ctx.dataSources.ordersProvider.getOrders()
   }
 };
