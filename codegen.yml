@@ -8,6 +8,7 @@ generates:
     config:
       contextType: ../index#Context
     plugins:
-      - add: '/* tslint:disable */'
-      - 'typescript'
-      - 'typescript-resolvers'
+      - add:
+          content: '/* tslint:disable */'
+      - typescript
+      - typescript-resolvers

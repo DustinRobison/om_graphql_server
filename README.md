@@ -4,8 +4,8 @@ This is a simple example of a http graphql server with Typescript and apollo.
 
 | Category  | Pro | Cons |
 | ------------- | ------------- | ------------- |
-| Language<br />(TypeScript)  | - [Widely Excepted](https://trends.google.com/trends/explore?geo=US&q=%2Fm%2F02p97,%2Fm%2F07sbkfb,%2Fm%2F05z1_,%2Fm%2F03yb8hb) <br />- [Type Safe](https://en.wikipedia.org/wiki/Type_safety) <br />- [npm](https://www.npmjs.com/) (350,000+ packages)   |  - Async coding nuances for new JS learns  |
-| Pure  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS <br /> - No addition configuration for devs <br /> - Good software principles of demarkation points for apps <br /> - Quick, repeatable dev patters | - Restricted to Node  |
+| Language<br />(TypeScript)  | - [Widely Excepted](https://trends.google.com/trends/explore?geo=US&q=%2Fm%2F02p97,%2Fm%2F07sbkfb,%2Fm%2F05z1_,%2Fm%2F03yb8hb) in dev community <br />- [Type Safe](https://en.wikipedia.org/wiki/Type_safety) <br />- [npm](https://www.npmjs.com/) (350,000+ packages) <br /> - Instant hot reload on save   |  - Async coding nuances for new JS learns  |
+| Pure<br />(1 Prerequisite)  | - Only prerequisite is Node/NPM <br /> - Dev on any major OS <br /> - No addition configuration for new devs <br /> - Good software principles of demarkation points for apps <br /> - Quick, repeatable dev patters <br /> - Enforce clean code with auto linters | - Restricted to Node  |
 
 List of other cool features thrown in:
 - [Auto code formatting](https://prettier.io/docs/en/)
@@ -21,14 +21,17 @@ List of other cool features thrown in:
 - [Node v10+/NPM v6+](https://nodejs.org/en/)
 
 ## Learning Curve
-<h5>Things you need to know</h5>
-- :white_check_mark: JavaScript
-- :white_check_mark: GraphQL
+### Things you need to know
+- :white_check_mark: JavaScript <br />
+- :white_check_mark: GraphQL <br />
 
-<h5>Things you dont need to know</h5>
-- :x: *nix
-- :x: A new IDE (integrated development environment)
-- :x: 
+### Things you dont need to know
+- :x: *nix <br />
+- :x: A new IDE (integrated development environment) <br />
+
+### Other requested changes
+- Remove verbs from graphQL external interface
+    - ie. `getOrder` should be `order` since it is already in a query and can be reused
 
 ## Included
 
@@ -41,16 +44,6 @@ The following development dependencies are included:
 - [tslint](https://github.com/palantir/tslint)
 - [husky](https://github.com/typicode/husky)
 - [editorconfig](https://editorconfig.org/)
-
-## Getting started
-
-First clone the repository and install dependencies.
-
-```bash
-$ git clone https://github.com/markuswind/apollo-server-boilerplate
-$ npm ci
-$ npm run start
-```
 
 ## Adding new (type safe) resolvers
 

@@ -1,13 +1,15 @@
 import { ApolloServer } from 'apollo-server';
 
-import { BooksProvider } from './provider';
-import { resolvers, typeDefs } from './resolver';
+import { BooksProvider } from './providers/provider';
+import { OrdersProvider } from './providers/orders';
+import { resolvers, typeDefs } from './resolvers/resolver';
 
 // This is where we define the context type which is used
 // to have correct typing when using context in the resolvers.
 export interface Context {
   dataSources: {
     booksProvider: BooksProvider;
+    ordersProvider: OrdersProvider;
   };
 }
 
@@ -15,7 +17,8 @@ export interface Context {
 // used to retrieve data from the resolvers.
 const dataSources = (): Context['dataSources'] => {
   return {
-    booksProvider: new BooksProvider()
+    booksProvider: new BooksProvider(),
+    ordersProvider: new OrdersProvider()
   };
 };
 

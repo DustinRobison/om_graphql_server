@@ -1,5 +1,5 @@
 import { DataSource } from 'apollo-datasource';
-import { QueryBookArgs } from './generated/graphql';
+import { QueryBookArgs } from '../generated/graphql';
 
 // This is a (sample) collection of books we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
