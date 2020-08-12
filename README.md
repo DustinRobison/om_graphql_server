@@ -23,11 +23,10 @@ List of other cool features thrown in:
 ## Learning Curve
 ### Things you need to know
 - :white_check_mark: JavaScript <br />
-- :white_check_mark: GraphQL <br />
 
 ### Things you dont need to know
-- :x: *nix <br />
-- :x: A new IDE (integrated development environment) <br />
+- :x:  *nix <br />
+- :x: A specific IDE (integrated development environment) or work environment  <br />
 
 ### Other requested changes
 - Remove verbs from graphQL external interface
