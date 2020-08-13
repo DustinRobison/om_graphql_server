@@ -25,4 +25,4 @@ export const generateProductModel = (db: Sequelize) => {
     },
     {}
   );
-}
+};

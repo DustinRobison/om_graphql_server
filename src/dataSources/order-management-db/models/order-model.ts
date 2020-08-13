@@ -26,5 +26,4 @@ export const generateOrderModel = (db: Sequelize) => {
     },
     {}
   );
-}
-
+};

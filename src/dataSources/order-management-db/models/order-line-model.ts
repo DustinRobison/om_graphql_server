@@ -33,4 +33,4 @@ export const generateOrderLineModel = (db: Sequelize) => {
     },
     {}
   );
-}
+};
