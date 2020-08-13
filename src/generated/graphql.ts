@@ -11,161 +11,87 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Date: any;
   DateTime: any;
 };
 
 
-
 export type OrderInput = {
-  orderLines?: Maybe<Array<OrderLineItemInput>>;
-  serviceLocation?: Maybe<LocationInput>;
-  customerRelationshipId: Scalars['ID'];
-  paymentTransactionId?: Maybe<Scalars['ID']>;
-  executionDate?: Maybe<Scalars['DateTime']>;
+  name?: Maybe<Scalars['String']>;
+  orderLines: Array<OrderLineInput>;
+  serviceLocationId?: Maybe<Scalars['ID']>;
 };
 
-export type OrderLineItemInput = {
-  orderLineId: Scalars['ID'];
-  serviceLocation?: Maybe<LocationInput>;
-  configuredProductType: ProductTypeInput;
+export type OrderLineInput = {
+  productId: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+  serviceLocationId?: Maybe<Scalars['ID']>;
 };
 
 export type LocationInput = {
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
-  addressLines: Array<Scalars['String']>;
+  streetAddress: Scalars['String'];
   city: Scalars['String'];
   regionOrState: Scalars['String'];
   zipOrPostCode?: Maybe<Scalars['String']>;
-  isoCountryCode: IsoCountryCodeInput;
+  isoCountryCode: Scalars['String'];
 };
 
-export type ProductTypeInput = {
-  productTypeId: Scalars['ID'];
+export type ProductInput = {
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  kind: Scalars['String'];
-  characteristics?: Maybe<Array<Maybe<CharacteristicInput>>>;
-  prices?: Maybe<Array<Maybe<PriceInput>>>;
-  products?: Maybe<Array<Maybe<ProductTypeInput>>>;
-};
-
-export type MoneyInput = {
-  value?: Maybe<Scalars['Float']>;
-  currency?: Maybe<CurrencyInput>;
-};
-
-export type CurrencyInput = {
-  name?: Maybe<Scalars['String']>;
-  alphabeticCode?: Maybe<Scalars['String']>;
-  numericCode?: Maybe<Scalars['Int']>;
-};
-
-export type PriceInput = {
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  kind: Scalars['String'];
-  recurrence: Scalars['String'];
-  amount: MoneyInput;
-  percentage?: Maybe<Scalars['Float']>;
-  unitOfMeasure?: Maybe<Scalars['String']>;
-};
-
-export type IsoCountryCodeInput = {
-  name: Scalars['String'];
-  alphabeticThreeCharacterCode: Scalars['String'];
-};
-
-export type CharacteristicInput = {
-  name?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
-  valueType?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type Order = {
   __typename?: 'Order';
   id: Scalars['ID'];
-  orderLines?: Maybe<Array<OrderLineItem>>;
+  name?: Maybe<Scalars['String']>;
+  orderLines?: Maybe<Array<OrderLine>>;
   serviceLocation?: Maybe<Location>;
-  customerRelationshipId: Scalars['ID'];
-  paymentTransactionId?: Maybe<Scalars['ID']>;
-  executionDate?: Maybe<Scalars['DateTime']>;
   state?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type OrderLine = {
+  __typename?: 'OrderLine';
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  serviceLocation?: Maybe<Location>;
+  product?: Maybe<Product>;
+  quantity: Scalars['Int'];
+  createdAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Location = {
   __typename?: 'Location';
+  id: Scalars['ID'];
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
-  addressLines: Array<Scalars['String']>;
+  streetAddress: Scalars['String'];
   city: Scalars['String'];
   regionOrState: Scalars['String'];
   zipOrPostCode?: Maybe<Scalars['String']>;
-  isoCountryCode: IsoCountryCode;
+  isoCountryCode: Scalars['String'];
 };
 
-export type OrderLineItem = {
-  __typename?: 'OrderLineItem';
-  orderLineId: Scalars['ID'];
-  serviceLocation?: Maybe<Location>;
-  configuredProductType: ProductType;
-  productInstanceId?: Maybe<Scalars['ID']>;
-};
-
-export type IsoCountryCode = {
-  __typename?: 'ISOCountryCode';
-  name: Scalars['String'];
-  alphabeticThreeCharacterCode: Scalars['String'];
-};
-
-export type ProductType = {
-  __typename?: 'ProductType';
-  productTypeId: Scalars['ID'];
+export type Product = {
+  __typename?: 'Product';
+  id: Scalars['ID'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  kind: Scalars['String'];
-  characteristics?: Maybe<Array<Maybe<Characteristic>>>;
-  prices?: Maybe<Array<Maybe<Price>>>;
-  products?: Maybe<Array<Maybe<ProductType>>>;
-};
-
-export type Characteristic = {
-  __typename?: 'Characteristic';
-  name: Scalars['String'];
-  value?: Maybe<Scalars['String']>;
-  valueType?: Maybe<Scalars['String']>;
-};
-
-export type Price = {
-  __typename?: 'Price';
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  kind: Scalars['String'];
-  recurrence: Scalars['String'];
-  amount: Money;
-  percentage?: Maybe<Scalars['Float']>;
-  unitOfMeasure?: Maybe<Scalars['String']>;
-};
-
-export type Money = {
-  __typename?: 'Money';
-  value?: Maybe<Scalars['Float']>;
-  currency?: Maybe<Currency>;
-};
-
-export type Currency = {
-  __typename?: 'Currency';
-  name: Scalars['String'];
-  alphabeticCode?: Maybe<Scalars['String']>;
-  numericCode?: Maybe<Scalars['Int']>;
-  majorUnitSymbol?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Query = {
   __typename?: 'Query';
   order?: Maybe<Order>;
   orders?: Maybe<Array<Maybe<Order>>>;
+  product?: Maybe<Product>;
+  products?: Maybe<Array<Maybe<Product>>>;
+  location?: Maybe<Location>;
+  locations?: Maybe<Array<Maybe<Location>>>;
 };
 
 
@@ -173,14 +99,36 @@ export type QueryOrderArgs = {
   id: Scalars['ID'];
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  submitOrder?: Maybe<Order>;
+
+export type QueryProductArgs = {
+  id: Scalars['ID'];
 };
 
 
-export type MutationSubmitOrderArgs = {
+export type QueryLocationArgs = {
+  id: Scalars['ID'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createOrder?: Maybe<Order>;
+  createProduct?: Maybe<Product>;
+  createLocation?: Maybe<Location>;
+};
+
+
+export type MutationCreateOrderArgs = {
   order: OrderInput;
+};
+
+
+export type MutationCreateProductArgs = {
+  product: ProductInput;
+};
+
+
+export type MutationCreateLocationArgs = {
+  location: LocationInput;
 };
 
 
@@ -261,30 +209,19 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Date: ResolverTypeWrapper<Scalars['Date']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   OrderInput: OrderInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  OrderLineItemInput: OrderLineItemInput;
+  OrderLineInput: OrderLineInput;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   LocationInput: LocationInput;
   Float: ResolverTypeWrapper<Scalars['Float']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  ProductTypeInput: ProductTypeInput;
-  MoneyInput: MoneyInput;
-  CurrencyInput: CurrencyInput;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  PriceInput: PriceInput;
-  ISOCountryCodeInput: IsoCountryCodeInput;
-  CharacteristicInput: CharacteristicInput;
+  ProductInput: ProductInput;
   Order: ResolverTypeWrapper<Order>;
+  OrderLine: ResolverTypeWrapper<OrderLine>;
   Location: ResolverTypeWrapper<Location>;
-  OrderLineItem: ResolverTypeWrapper<OrderLineItem>;
-  ISOCountryCode: ResolverTypeWrapper<IsoCountryCode>;
-  ProductType: ResolverTypeWrapper<ProductType>;
-  Characteristic: ResolverTypeWrapper<Characteristic>;
-  Price: ResolverTypeWrapper<Price>;
-  Money: ResolverTypeWrapper<Money>;
-  Currency: ResolverTypeWrapper<Currency>;
+  Product: ResolverTypeWrapper<Product>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -292,38 +229,23 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Date: Scalars['Date'];
   DateTime: Scalars['DateTime'];
   OrderInput: OrderInput;
+  String: Scalars['String'];
   ID: Scalars['ID'];
-  OrderLineItemInput: OrderLineItemInput;
+  OrderLineInput: OrderLineInput;
+  Int: Scalars['Int'];
   LocationInput: LocationInput;
   Float: Scalars['Float'];
-  String: Scalars['String'];
-  ProductTypeInput: ProductTypeInput;
-  MoneyInput: MoneyInput;
-  CurrencyInput: CurrencyInput;
-  Int: Scalars['Int'];
-  PriceInput: PriceInput;
-  ISOCountryCodeInput: IsoCountryCodeInput;
-  CharacteristicInput: CharacteristicInput;
+  ProductInput: ProductInput;
   Order: Order;
+  OrderLine: OrderLine;
   Location: Location;
-  OrderLineItem: OrderLineItem;
-  ISOCountryCode: IsoCountryCode;
-  ProductType: ProductType;
-  Characteristic: Characteristic;
-  Price: Price;
-  Money: Money;
-  Currency: Currency;
+  Product: Product;
   Query: {};
   Mutation: {};
   Boolean: Scalars['Boolean'];
 };
-
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
-}
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
@@ -331,104 +253,66 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type OrderResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  orderLines?: Resolver<Maybe<Array<ResolversTypes['OrderLineItem']>>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  orderLines?: Resolver<Maybe<Array<ResolversTypes['OrderLine']>>, ParentType, ContextType>;
   serviceLocation?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
-  customerRelationshipId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  paymentTransactionId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  executionDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type OrderLineResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderLine'] = ResolversParentTypes['OrderLine']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  serviceLocation?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType>;
+  quantity?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type LocationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   latitude?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   longitude?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  addressLines?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  streetAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   city?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   regionOrState?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   zipOrPostCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  isoCountryCode?: Resolver<ResolversTypes['ISOCountryCode'], ParentType, ContextType>;
+  isoCountryCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
-export type OrderLineItemResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderLineItem'] = ResolversParentTypes['OrderLineItem']> = {
-  orderLineId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  serviceLocation?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
-  configuredProductType?: Resolver<ResolversTypes['ProductType'], ParentType, ContextType>;
-  productInstanceId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type IsoCountryCodeResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ISOCountryCode'] = ResolversParentTypes['ISOCountryCode']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  alphabeticThreeCharacterCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type ProductTypeResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductType'] = ResolversParentTypes['ProductType']> = {
-  productTypeId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+export type ProductResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  kind?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  characteristics?: Resolver<Maybe<Array<Maybe<ResolversTypes['Characteristic']>>>, ParentType, ContextType>;
-  prices?: Resolver<Maybe<Array<Maybe<ResolversTypes['Price']>>>, ParentType, ContextType>;
-  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProductType']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type CharacteristicResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Characteristic'] = ResolversParentTypes['Characteristic']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  valueType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type PriceResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Price'] = ResolversParentTypes['Price']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  kind?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  recurrence?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  amount?: Resolver<ResolversTypes['Money'], ParentType, ContextType>;
-  percentage?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  unitOfMeasure?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type MoneyResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Money'] = ResolversParentTypes['Money']> = {
-  value?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
-  currency?: Resolver<Maybe<ResolversTypes['Currency']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
-
-export type CurrencyResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Currency'] = ResolversParentTypes['Currency']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  alphabeticCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  numericCode?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  majorUnitSymbol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   order?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<QueryOrderArgs, 'id'>>;
   orders?: Resolver<Maybe<Array<Maybe<ResolversTypes['Order']>>>, ParentType, ContextType>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'id'>>;
+  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
+  location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType, RequireFields<QueryLocationArgs, 'id'>>;
+  locations?: Resolver<Maybe<Array<Maybe<ResolversTypes['Location']>>>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  submitOrder?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<MutationSubmitOrderArgs, 'order'>>;
+  createOrder?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'order'>>;
+  createProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'product'>>;
+  createLocation?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType, RequireFields<MutationCreateLocationArgs, 'location'>>;
 };
 
 export type Resolvers<ContextType = Context> = {
-  Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
   Order?: OrderResolvers<ContextType>;
+  OrderLine?: OrderLineResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;
-  OrderLineItem?: OrderLineItemResolvers<ContextType>;
-  ISOCountryCode?: IsoCountryCodeResolvers<ContextType>;
-  ProductType?: ProductTypeResolvers<ContextType>;
-  Characteristic?: CharacteristicResolvers<ContextType>;
-  Price?: PriceResolvers<ContextType>;
-  Money?: MoneyResolvers<ContextType>;
-  Currency?: CurrencyResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
 };

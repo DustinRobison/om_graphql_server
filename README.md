@@ -32,7 +32,7 @@ List of other cool features thrown in:
 - Remove verbs from graphQL external interface
     - ie. `getOrder` could be `Order` since it is already in a query and can be reused
 - Ability to work offline with no internet connection
-    - has requirements like already having latest code and packages along with a local db
+    - has requirements like already having the latest code and packages along with a local db
     
 ## Things I Value
 - Being Inclusive
@@ -51,6 +51,8 @@ List of other cool features thrown in:
 - :white_check_mark: Hot Reload
 - :white_check_mark: In Memory DB with hooked up 
 - :white_check_mark: Create and Delete basic Orders to roughly match the domain
+- :x: Write basic resolvers that do some logic and don't go straight to DB
+- :x: File structure clean up: Move functions to individual files
 - :x: Unit Testing
     - Test individual helper or resolver functions by creating inputs and expecting outputs
 - :x: E2E Testing

@@ -1,34 +1,12 @@
 import { DataSource } from 'apollo-datasource';
 import {
-  MutationSubmitOrderArgs,
-  Order,
-  QueryOrderArgs
+  MutationCreateLocationArgs,
+  MutationCreateOrderArgs, MutationCreateProductArgs, QueryLocationArgs,
+  QueryOrderArgs,
+  QueryProductArgs
 } from '../generated/graphql';
 import { StoreInterface } from '../utils';
 
-const orders: Order[] = [
-  {
-    id: '123',
-    orderLines: [],
-    customerRelationshipId: 'abc',
-    executionDate: '2020-01-01T00:00:00.000Z',
-    state: 'new'
-  },
-  {
-    id: '234',
-    orderLines: [],
-    customerRelationshipId: 'abc',
-    executionDate: '2020-01-01T00:00:00.000Z',
-    state: 'new'
-  },
-  {
-    id: '34',
-    orderLines: [],
-    customerRelationshipId: 'abc',
-    executionDate: '2020-01-01T00:00:00.000Z',
-    state: 'new'
-  }
-];
 
 export class OrderManagementDb extends DataSource {
   private store: StoreInterface;
@@ -37,19 +15,57 @@ export class OrderManagementDb extends DataSource {
     this.store = store;
   }
 
+  // ORDER
   public async getOrder(args: QueryOrderArgs) {
-    return orders.find((order) => order.id === args.id);
+    return this.store.Order.findByPk(args.id);
   }
 
   public async getOrders() {
     return this.store.Order.findAll();
-    // return ordersRefs.every(order => order instanceof this.store.Order);
   }
 
-  public async submitOrder(args: MutationSubmitOrderArgs) {
+  public async createOrder(args: MutationCreateOrderArgs) {
+    const {name, serviceLocationId} = args.order;
     const order = await this.store.Order.create({
-      customerRelationshipId: args.order.customerRelationshipId
+      name,
+      serviceLocationId
     });
     return order;
+  }
+
+  // PRODUCT
+  public async getProduct(args: QueryProductArgs) {
+    return this.store.Product.findByPk(args.id);
+  }
+
+  public async getProducts() {
+    return this.store.Product.findAll();
+  }
+
+  public async createProduct(args: MutationCreateProductArgs) {
+    const {name, description, price} = args.product;
+    const product = await this.store.Product.create({
+      name,
+      description,
+      price
+    });
+    return product;
+  }
+
+  // LOCATION
+  public async getLocation(args: QueryLocationArgs) {
+    return this.store.Location.findByPk(args.id);
+  }
+
+  public async getLocations() {
+    return this.store.Location.findAll();
+  }
+
+  public async createLocation(args: MutationCreateLocationArgs) {
+    const {latitude, longitude, streetAddress, city, isoCountryCode, regionOrState, zipOrPostCode} = args.location;
+    const location = await this.store.Location.create({
+      latitude, longitude, streetAddress, city, isoCountryCode, regionOrState, zipOrPostCode
+    });
+    return location;
   }
 }

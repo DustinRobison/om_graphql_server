@@ -6,7 +6,7 @@ documents: null
 generates:
   src/generated/graphql.ts:
     config:
-      contextType: ../index#Context
+      contextType: ../app#Context
     plugins:
       - add:
           content: '/* tslint:disable */'

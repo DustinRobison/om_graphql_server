@@ -4,151 +4,85 @@ import { gql } from 'apollo-server';
 // which ways the data can be fetched from the GraphQL server.
 export const typeDefs = gql`
   # Comments in GraphQL are defined with the hash (#) symbol.
-  scalar Date
   scalar DateTime
 
   input OrderInput {
-    orderLines: [OrderLineItemInput!]
-    serviceLocation: LocationInput
-    customerRelationshipId: ID!
-    paymentTransactionId: ID
-    executionDate: DateTime
+    name: String
+    orderLines: [OrderLineInput!]!
+    serviceLocationId: ID
   }
 
-  input OrderLineItemInput {
-    orderLineId: ID!
-    serviceLocation: LocationInput
-    configuredProductType: ProductTypeInput!
+  input OrderLineInput {
+    productId: ID!
+    quantity: Int
+    serviceLocationId: ID
   }
 
   input LocationInput {
     latitude: Float
     longitude: Float
-    addressLines: [String!]!
+    streetAddress: String!
     city: String!
     regionOrState: String!
     zipOrPostCode: String
-    isoCountryCode: ISOCountryCodeInput!
+    isoCountryCode: String!
   }
 
-  input ProductTypeInput {
-    productTypeId: ID!
+  input ProductInput {
     name: String!
     description: String
-    kind: String!
-    characteristics: [CharacteristicInput]
-    prices: [PriceInput]
-    products: [ProductTypeInput]
-  }
-
-  input MoneyInput {
-    value: Float
-    currency: CurrencyInput
-  }
-
-  input CurrencyInput {
-    name: String
-    alphabeticCode: String
-    numericCode: Int
-  }
-
-  input PriceInput {
-    name: String!
-    description: String
-    kind: String!
-    recurrence: String!
-    amount: MoneyInput!
-    percentage: Float
-    unitOfMeasure: String
-  }
-
-  input ISOCountryCodeInput {
-    name: String!
-    alphabeticThreeCharacterCode: String!
-  }
-
-  input CharacteristicInput {
-    name: String
-    value: String
-    valueType: String
+    price: Float
   }
 
   type Order {
     id: ID!
-    orderLines: [OrderLineItem!]
+    name: String
+    orderLines: [OrderLine!]
     serviceLocation: Location
-    customerRelationshipId: ID!
-    paymentTransactionId: ID
-    executionDate: DateTime
     state: String
+    createdAt: DateTime
+  }
+
+  type OrderLine {
+    id: ID!
+    name: String
+    serviceLocation: Location
+    product: Product
+    quantity: Int!
+    createdAt: DateTime
   }
 
   type Location {
+    id: ID!
     latitude: Float
     longitude: Float
-    addressLines: [String!]!
+    streetAddress: String!
     city: String!
     regionOrState: String!
     zipOrPostCode: String
-    isoCountryCode: ISOCountryCode!
+    isoCountryCode: String!
   }
 
-  type OrderLineItem {
-    orderLineId: ID!
-    serviceLocation: Location
-    configuredProductType: ProductType!
-    productInstanceId: ID
-  }
-
-  type ISOCountryCode {
-    name: String!
-    alphabeticThreeCharacterCode: String!
-  }
-
-  type ProductType {
-    productTypeId: ID!
+  type Product {
+    id: ID!
     name: String!
     description: String
-    kind: String!
-    characteristics: [Characteristic]
-    prices: [Price]
-    products: [ProductType]
-  }
-
-  type Characteristic {
-    name: String!
-    value: String
-    valueType: String
-  }
-
-  type Price {
-    name: String!
-    description: String
-    kind: String!
-    recurrence: String!
-    amount: Money!
-    percentage: Float
-    unitOfMeasure: String
-  }
-
-  type Money {
-    value: Float
-    currency: Currency
-  }
-
-  type Currency {
-    name: String!
-    alphabeticCode: String
-    numericCode: Int
-    majorUnitSymbol: String
+    price: Float
+    createdAt: DateTime
   }
 
   type Query {
     order(id: ID!): Order
     orders: [Order]
+    product(id: ID!): Product
+    products: [Product]
+    location(id: ID!): Location
+    locations: [Location]
   }
 
   type Mutation {
-    submitOrder(order: OrderInput!): Order
+    createOrder(order: OrderInput!): Order
+    createProduct(product: ProductInput!): Product
+    createLocation(location: LocationInput!): Location
   }
 `;
