@@ -1,12 +1,13 @@
 import { DataSource } from 'apollo-datasource';
 import {
   MutationCreateLocationArgs,
-  MutationCreateOrderArgs, MutationCreateProductArgs, QueryLocationArgs,
+  MutationCreateOrderArgs,
+  MutationCreateProductArgs,
+  QueryLocationArgs,
   QueryOrderArgs,
   QueryProductArgs
 } from '../generated/graphql';
 import { StoreInterface } from '../utils';
-
 
 export class OrderManagementDb extends DataSource {
   private store: StoreInterface;
@@ -25,7 +26,7 @@ export class OrderManagementDb extends DataSource {
   }
 
   public async createOrder(args: MutationCreateOrderArgs) {
-    const {name, serviceLocationId} = args.order;
+    const { name, serviceLocationId } = args.order;
     const order = await this.store.Order.create({
       name,
       serviceLocationId
@@ -43,7 +44,7 @@ export class OrderManagementDb extends DataSource {
   }
 
   public async createProduct(args: MutationCreateProductArgs) {
-    const {name, description, price} = args.product;
+    const { name, description, price } = args.product;
     const product = await this.store.Product.create({
       name,
       description,
@@ -62,9 +63,23 @@ export class OrderManagementDb extends DataSource {
   }
 
   public async createLocation(args: MutationCreateLocationArgs) {
-    const {latitude, longitude, streetAddress, city, isoCountryCode, regionOrState, zipOrPostCode} = args.location;
+    const {
+      latitude,
+      longitude,
+      streetAddress,
+      city,
+      isoCountryCode,
+      regionOrState,
+      zipOrPostCode
+    } = args.location;
     const location = await this.store.Location.create({
-      latitude, longitude, streetAddress, city, isoCountryCode, regionOrState, zipOrPostCode
+      latitude,
+      longitude,
+      streetAddress,
+      city,
+      isoCountryCode,
+      regionOrState,
+      zipOrPostCode
     });
     return location;
   }
