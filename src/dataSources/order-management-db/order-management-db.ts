@@ -6,8 +6,8 @@ import {
   QueryLocationArgs,
   QueryOrderArgs,
   QueryProductArgs
-} from '../generated/graphql';
-import { StoreInterface } from '../utils';
+} from '../../generated/graphql';
+import { StoreInterface } from '../../utils';
 
 export class OrderManagementDb extends DataSource {
   private store: StoreInterface;

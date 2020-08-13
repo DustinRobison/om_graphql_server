@@ -1,9 +1,9 @@
 import { ApolloServer } from 'apollo-server';
-import { resolvers } from './resolvers/resolver';
+import { resolvers } from './resolvers';
 import { typeDefs } from './schema';
 import { createStore } from './utils';
 
-import { OrderManagementDb } from './dataSources/order-management-db';
+import { OrderManagementDb } from './dataSources/order-management-db/order-management-db';
 
 // This is where we define the context type which is used
 // to have correct typing when using context in the resolvers.
