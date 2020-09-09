@@ -7,7 +7,15 @@ import {
   QueryOrderArgs,
   QueryProductArgs
 } from '../../generated/graphql';
-import { StoreInterface } from '../../utils';
+import { ModelCtor, Sequelize } from 'sequelize';
+
+export interface StoreInterface {
+  db: Sequelize;
+  Order: ModelCtor<any>;
+  OrderLine: ModelCtor<any>;
+  Location: ModelCtor<any>;
+  Product: ModelCtor<any>;
+}
 
 export class OrderManagementDb extends DataSource {
   private store: StoreInterface;

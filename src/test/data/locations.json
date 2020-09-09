@@ -1,0 +1,23 @@
+[
+  {
+    "streetAddress":"655 Fourth Ave",
+    "city":"San Diego",
+    "regionOrState":"CA",
+    "zipOrPostCode":"92101",
+    "isoCountryCode":"USA"
+  },
+  {
+    "streetAddress":"6305 El Camino Real",
+    "city":"Carlsbad",
+    "regionOrState":"CA",
+    "zipOrPostCode":"92029",
+    "isoCountryCode":"USA"
+  },
+  {
+    "streetAddress":"999 Van Ness Ave",
+    "city":"San Francisco",
+    "regionOrState":"CA",
+    "zipOrPostCode":"94109",
+    "isoCountryCode":"USA"
+  }
+]

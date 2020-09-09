@@ -1,0 +1,17 @@
+[
+  {
+    "name": "My Cool Product",
+    "description": "People Love it",
+    "price": 9.99
+  },
+  {
+    "name": "My Other Product 2",
+    "description": "People like it",
+    "price": 6.12
+  },
+  {
+    "name": "My Last Product 3",
+    "description": "People think it is ok",
+    "price": 3.00
+  }
+]
